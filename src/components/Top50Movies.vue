@@ -24,9 +24,9 @@ export default {
             topMoviesList: null,
             preUrl: "https://image.tmdb.org/t/p/original/",
             loading: true,
-            sortedByTitle: false,
-            sortedByDate: false,
-            sortedByRating: false,
+            sortedByTitle: false, 
+            sortedByDate: false, 
+            sortedByRating: false, 
         }
     },
     created: function () {
@@ -50,60 +50,8 @@ export default {
                     })
             })
     },
-    methods: {
-        sortByTitle() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByTitle) {
-                this.sortedByTitle = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.title < b.title) return -1;
-                    return a.title > b.title ? 1 : 0;
-                });
-            } else {
-                this.sortedByTitle = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.title > b.title) return -1;
-                    return a.title < b.title ? 1 : 0;
-                });
-            }
 
-            this.$emit("sort-movies", sortedMovies);
-        },
-        sortByDate() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByDate) {
-                this.sortedByDate = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.release_date < b.release_date) return -1;
-                    return a.release_date > b.release_date ? 1 : 0;
-                });
-            } else {
-                this.sortedByDate = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.release_date > b.release_date) return -1;
-                    return a.release_date < b.release_date ? 1 : 0;
-                });
-            }
-            this.$emit("sort-movies", sortedMovies);
-        },
-        sortByRating() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByRating) {
-                this.sortedByRating = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.vote_average < b.vote_average) return -1;
-                    return a.vote_average > b.vote_average ? 1 : 0;
-                });
-            } else {
-                this.sortedByRating = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.vote_average > b.vote_average) return -1;
-                    return a.vote_average < b.vote_average ? 1 : 0;
-                });
-            }
-            this.$emit("sort-movies", sortedMovies);
-        },
-    },
+    
 };
 </script>
 

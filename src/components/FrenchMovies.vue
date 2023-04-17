@@ -17,7 +17,7 @@
         <img class="m-auto" v-bind:src="preUrl + movie.poster_path" alt="moviePoster" />
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
-          <p class="card-text">Date de sortie : {{ movie.release_date }}</p>
+          <p class="card-text">Date de sortie : {{ formatDate(movie.release_date) }}</p>
           <p class="card-text">Note moyenne : {{ movie.vote_average }} /10</p>
           <router-link :to="`/movieDetails/${movie.id}`" class="btn btn-dark">Voir le détail</router-link>
         </div>
@@ -29,6 +29,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 export default {
   name: 'AmericanMovies',
   props: [
@@ -57,6 +58,11 @@ export default {
       })
   },
   methods: {
+    formatDate(dateString) {
+            const date = dayjs(dateString);
+                // Then specify how you want your dates to be formatted
+            return date.format('DD/MM/YYYY');
+        },
         sortByTitle() {
             let sortedMovies = this.movies;
             if (!this.sortedByTitle) {

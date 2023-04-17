@@ -17,7 +17,7 @@
         <img class="m-auto" v-bind:src="preUrl + movie.poster_path" alt="moviePoster" />
         <div class="card-body">
           <h5 class="card-title">{{ movie.title }}</h5>
-          <p class="card-text">Date de sortie : {{ movie.release_date }}</p>
+          <p class="card-text">Date de sortie : {{ formatDate(movie.release_date) }}</p>
           <p class="card-text">Note moyenne : {{ movie.vote_average }} /10</p>
           <router-link :to="`/movieDetails/${movie.id}`" class="btn btn-dark">Voir le détail</router-link>
         </div>
@@ -29,6 +29,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from 'dayjs';
 export default {
   name: 'LastMovies',
   props: [
@@ -42,9 +43,9 @@ export default {
     return {
       movies: null,
       preUrl: "https://image.tmdb.org/t/p/original/",
-      sortedByTitle: false, 
-      sortedByDate: false, 
-      sortedByRating: false, 
+      sortedByTitle: false,
+      sortedByDate: false,
+      sortedByRating: false,
     }
 
   },
@@ -57,59 +58,64 @@ export default {
       })
   },
   methods: {
-        sortByTitle() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByTitle) {
-                this.sortedByTitle = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.title < b.title) return -1;
-                    return a.title > b.title ? 1 : 0;
-                });
-            } else {
-                this.sortedByTitle = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.title > b.title) return -1;
-                    return a.title < b.title ? 1 : 0;
-                });
-            }
-
-            this.$emit("sort-movies", sortedMovies);
-        },
-        sortByDate() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByDate) {
-                this.sortedByDate = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.release_date < b.release_date) return -1;
-                    return a.release_date > b.release_date ? 1 : 0;
-                });
-            } else {
-                this.sortedByDate = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.release_date > b.release_date) return -1;
-                    return a.release_date < b.release_date ? 1 : 0;
-                });
-            }
-            this.$emit("sort-movies", sortedMovies);
-        },
-        sortByRating() {
-            let sortedMovies = this.movies;
-            if (!this.sortedByRating) {
-                this.sortedByRating = true;
-                sortedMovies.sort((a, b) => {
-                    if (a.vote_average < b.vote_average) return -1;
-                    return a.vote_average > b.vote_average ? 1 : 0;
-                });
-            } else {
-                this.sortedByRating = false;
-                sortedMovies.sort((a, b) => {
-                    if (a.vote_average > b.vote_average) return -1;
-                    return a.vote_average < b.vote_average ? 1 : 0;
-                });
-            }
-            this.$emit("sort-movies", sortedMovies);
-        },
+    formatDate(dateString) {
+      const date = dayjs(dateString);
+      // Then specify how you want your dates to be formatted
+      return date.format('DD/MM/YYYY');
     },
+    sortByTitle() {
+      let sortedMovies = this.movies;
+      if (!this.sortedByTitle) {
+        this.sortedByTitle = true;
+        sortedMovies.sort((a, b) => {
+          if (a.title < b.title) return -1;
+          return a.title > b.title ? 1 : 0;
+        });
+      } else {
+        this.sortedByTitle = false;
+        sortedMovies.sort((a, b) => {
+          if (a.title > b.title) return -1;
+          return a.title < b.title ? 1 : 0;
+        });
+      }
+
+      this.$emit("sort-movies", sortedMovies);
+    },
+    sortByDate() {
+      let sortedMovies = this.movies;
+      if (!this.sortedByDate) {
+        this.sortedByDate = true;
+        sortedMovies.sort((a, b) => {
+          if (a.release_date < b.release_date) return -1;
+          return a.release_date > b.release_date ? 1 : 0;
+        });
+      } else {
+        this.sortedByDate = false;
+        sortedMovies.sort((a, b) => {
+          if (a.release_date > b.release_date) return -1;
+          return a.release_date < b.release_date ? 1 : 0;
+        });
+      }
+      this.$emit("sort-movies", sortedMovies);
+    },
+    sortByRating() {
+      let sortedMovies = this.movies;
+      if (!this.sortedByRating) {
+        this.sortedByRating = true;
+        sortedMovies.sort((a, b) => {
+          if (a.vote_average < b.vote_average) return -1;
+          return a.vote_average > b.vote_average ? 1 : 0;
+        });
+      } else {
+        this.sortedByRating = false;
+        sortedMovies.sort((a, b) => {
+          if (a.vote_average > b.vote_average) return -1;
+          return a.vote_average < b.vote_average ? 1 : 0;
+        });
+      }
+      this.$emit("sort-movies", sortedMovies);
+    },
+  },
 };
 </script>
 

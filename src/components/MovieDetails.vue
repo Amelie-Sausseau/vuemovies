@@ -13,7 +13,7 @@
                 </div>
                 <p class="card-text"> {{ movie.overview }}</p>
                 <div class="row">
-                    <p class="card-text">Date de sortie : {{ movie.release_date }}</p>
+                    <p class="card-text">Date de sortie : {{ formatDate(movie.release_date) }}</p>
                     <p class="card-text">Note moyenne : {{ movie.vote_average }} /10</p>
                     <p class="card-text">Titre original : {{ movie.original_title }}</p>
                 </div>
@@ -25,6 +25,7 @@
   
 <script>
 import axios from "axios";
+import dayjs from 'dayjs';
 export default {
     name: "MovieDetails",
     data() {
@@ -42,6 +43,11 @@ export default {
         };
     },
     methods: {
+        formatDate(dateString) {
+            const date = dayjs(dateString);
+                // Then specify how you want your dates to be formatted
+            return date.format('DD/MM/YYYY');
+        },
         getMovie(component) {
             axios
                 .get(
